@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<databaseChangeLog 
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd"> 
+    <changeSet author="alfonso_catalan" id="20190225-001">
+        <createTable tableName="user_addres">
+            <column name="id_Address" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="Street_type" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="Street_name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="Street_number" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="Street_int" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="Street_cp" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="rol_permission">
+            <column name="idrol_permission" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true" />
+            </column>
+            <column name="edit" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="request" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reports" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="user_rol">
+             <column name="idPermission" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true" />
+            </column>
+             <column name="rolname" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="level" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_rol_permission" references="rol_permission(idrol_permission)"/>
+            </column>
+        </createTable>
+        <createTable tableName="user_inf">
+            <column name="idUser_inf" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true" />
+            </column>
+            <column name="firstname" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_fk" type="INT">
+                <constraints nullable="false" />
+                <!--<constraints nullable="false" foreignKeyName="fk_address" references="user_addres(id_Address)"></constraints>-->
+            </column>
+            <column name="permission_k" type="INT">
+                <constraints nullable="false" />
+                <!--<constraints nullable="false" foreignKeyName="fk_rol_info" references="user_rol(idPermission)"/>-->
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="alfonso_catalan" id="20190225-002">
+        <!--<constraints nullable="false" foreignKeyName="fk_address" references="user_addres(id_Address)"></constraints>-->
+        <addForeignKeyConstraint baseColumnNames="address_fk"
+            baseTableName="user_inf"
+            constraintName="fk_address_person"
+            referencedColumnNames="id_Address"
+            referencedTableName="user_addres"/>
+        <!--<constraints nullable="false" foreignKeyName="fk_rol_info" references="user_rol(idPermission)"/>-->
+        <addForeignKeyConstraint baseColumnNames="permission_k"
+            baseTableName="user_inf"
+            constraintName="fk_rol_info"
+            referencedColumnNames="idPermission"
+            referencedTableName="user_rol"/>
+    </changeSet>
+
+</databaseChangeLog> 
