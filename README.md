@@ -1,4 +1,4 @@
-# Liquibase modify by poncho welcome to violence
+# Liquibase modify by poncho welcome to violence - Corregido
 ## Source Control for your database
 
 Es una libreria opensource para el manejo y ejecución de cambios en base de datos.
